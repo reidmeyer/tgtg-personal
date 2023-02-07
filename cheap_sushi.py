@@ -2,6 +2,7 @@
 import os
 import time as sleeptime
 from datetime import datetime, time
+from typing import Dict
 from tgtg import TgtgClient
 from pushover import init, Client
 
@@ -13,11 +14,29 @@ def is_time_between(begin_time, end_time, check_time=None):
     else: # crosses midnight
         return check_time >= begin_time or check_time <= end_time
 
+first_time = True
+
+client: TgtgClient
+credentials: Dict
 
 pushover_token = os.getenv("PUSHOVER_TOKEN")
 init(pushover_token)
-client = TgtgClient(email=os.getenv("EMAIL"))
-credentials = client.get_credentials()
+
+while True:
+    try:
+        if first_time or is_time_between(time(8,00), time(23,30)):
+            first_time = False
+            Client(os.getenv("PUSHOVER_CLIENT")).send_message("Email incoming for tgtg", title="TGTG")
+            client = TgtgClient(email=os.getenv("EMAIL"))
+            credentials = client.get_credentials()
+            break
+        else:
+            print("Sleeping since you aren't awake")
+            sleeptime.sleep(60*60)
+    except Exception as e:
+        print("Sleeping since you didn't respond to confirmation email")
+        sleeptime.sleep(60*60)
+
 
 items_notified = []
 while True:
@@ -35,18 +54,19 @@ while True:
                     items_notified = []
                     open('log.txt', 'w').close()
                     sleeptime.sleep(20*60)
+                    continue
 
             items = newClient.get_items(page_size=100)
 
             for item in items:
                 if item['items_available']>0:
                     if item['item']['item_id'] not in items_notified:
-                        print('notify')
-                        print(item)
-                        message = f"{item['store']['store_name']} has sushi"
-                        Client(os.getenv("PUSHOVER_CLIENT")).send_message(message, title="SUSHI")
-
-                    items_notified.append(item['item']['item_id'])
+                        if is_time_between(time(8,00), time(23,30)):
+                            print('notify')
+                            print(item)
+                            message = f"{item['store']['store_name']} has sushi"
+                            Client(os.getenv("PUSHOVER_CLIENT")).send_message(message, title="SUSHI")
+                            items_notified.append(item['item']['item_id'])
 
             sleeptime.sleep(60)
 
