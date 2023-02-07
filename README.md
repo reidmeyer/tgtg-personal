@@ -1,2 +1,2 @@
 # tgtg-personal
-hey y'all this is my toogoodtogo code WOOHOO i love sushi
+hey y'all this is my toogoodtogo script to get cheap sushi WOOHOO i love sushi

@@ -33,6 +33,7 @@ while True:
             # if time is between 1:30-1:30am
             if is_time_between(time(3,00), time(3,10)):
                     items_notified = []
+                    open('log.txt', 'w').close()
                     sleeptime.sleep(20*60)
 
             items = newClient.get_items(page_size=100)
@@ -53,4 +54,3 @@ while True:
         print(e)
         print("trying again")
         sleeptime.sleep(60)
-
