@@ -4,7 +4,8 @@ import time as sleeptime
 from datetime import datetime, time
 from typing import Dict
 from tgtg import TgtgClient
-from pushover import init, Client
+import requests
+import json
 
 def is_time_between(begin_time, end_time, check_time=None):
     # If check time is not given, default to current UTC time
@@ -19,14 +20,18 @@ first_time = True
 client: TgtgClient
 credentials: Dict
 
-pushover_token = os.getenv("PUSHOVER_TOKEN")
-init(pushover_token)
+webhook_key = os.getenv("IFTTT_WEBHOOK_KEY")
+url = f"https://maker.ifttt.com/trigger/tgtg/json/with/key/{webhook_key}"
+headers = {"Content-Type": "application/json"}
 
 while True:
     try:
         if first_time or is_time_between(time(8,00), time(23,30)):
             first_time = False
-            Client(os.getenv("PUSHOVER_CLIENT")).send_message("Email incoming for tgtg", title="TGTG")
+            payload = {"check-email": "now"}
+            json_payload = json.dumps(payload)
+            response = requests.post(url, headers=headers, data=json_payload)
+
             client = TgtgClient(email=os.getenv("EMAIL"))
             credentials = client.get_credentials()
             break
@@ -64,8 +69,9 @@ while True:
                         if is_time_between(time(8,00), time(23,30)):
                             print('notify')
                             print(item)
-                            message = f"{item['store']['store_name']} has sushi"
-                            Client(os.getenv("PUSHOVER_CLIENT")).send_message(message, title="SUSHI")
+                            payload = {"store": item['store']['store_name']}
+                            json_payload = json.dumps(payload)
+                            response = requests.post(url, headers=headers, data=json_payload)
                             items_notified.append(item['item']['item_id'])
 
             sleeptime.sleep(60)
