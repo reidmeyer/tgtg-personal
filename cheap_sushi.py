@@ -39,7 +39,7 @@ while True:
             print("Sleeping since you aren't awake")
             sleeptime.sleep(60*60)
     except Exception as e:
-        print("Sleeping since you didn't respond to confirmation email")
+        print(f"Sleeping since you didn't respond to confirmation email {e}")
         sleeptime.sleep(60*60)
 
 
