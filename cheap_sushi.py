@@ -5,7 +5,6 @@ from datetime import datetime, time
 from typing import Dict
 from tgtg import TgtgClient
 import requests
-import json
 
 def is_time_between(begin_time, end_time, check_time=None):
     # If check time is not given, default to current UTC time
@@ -15,23 +14,28 @@ def is_time_between(begin_time, end_time, check_time=None):
     else: # crosses midnight
         return check_time >= begin_time or check_time <= end_time
 
+def notify(message):
+    url = 'https://ntfy.sh/reid-02-17-2024'
+    data = {'message': message}
+
+    response = requests.post(url, data=data)
+
+    if response.status_code == 200:
+        print(f"Message sent successfully: {message}")
+    else:
+        print(f"Error sending message: {response.text}")
+
 first_time = True
 
 client: TgtgClient
 credentials: Dict
 
-webhook_key = os.getenv("IFTTT_WEBHOOK_KEY")
-url = f"https://maker.ifttt.com/trigger/tgtg/json/with/key/{webhook_key}"
-headers = {"Content-Type": "application/json"}
 
 while True:
     try:
         if first_time or is_time_between(time(8,00), time(23,30)):
             first_time = False
-            payload = {"check-email": "now"}
-            json_payload = json.dumps(payload)
-            response = requests.post(url, headers=headers, data=json_payload)
-
+            notify("check email")
             client = TgtgClient(email=os.getenv("EMAIL"))
             credentials = client.get_credentials()
             break
@@ -69,9 +73,7 @@ while True:
                         if is_time_between(time(8,00), time(23,30)):
                             print('notify')
                             print(item)
-                            payload = {"store": item['store']['store_name']}
-                            json_payload = json.dumps(payload)
-                            response = requests.post(url, headers=headers, data=json_payload)
+                            notify(f"Store: {item['store']['store_name']}")
                             items_notified.append(item['item']['item_id'])
 
             sleeptime.sleep(60)
