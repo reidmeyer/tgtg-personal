@@ -16,7 +16,7 @@ def is_time_between(begin_time, end_time, check_time=None):
 
 def notify(message):
     url = 'https://ntfy.sh/reid-02-17-2024'
-    response = requests.post(url, data=message)
+    response = requests.post(url, data=message.encode(encoding='utf-8'))
 
     if response.status_code == 200:
         print(f"Message sent successfully: {message}")
