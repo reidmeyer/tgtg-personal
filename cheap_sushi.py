@@ -48,7 +48,7 @@ while True:
 items_notified = []
 while True:
     try:
-        newClient = TgtgClient(access_token=credentials['access_token'], refresh_token=credentials['refresh_token'], cookie=credentials['cookie'], user_id=credentials['user_id'])
+        newClient = TgtgClient(access_token=credentials['access_token'], refresh_token=credentials['refresh_token'], cookie=credentials['cookie'])
 
         # run every minute
         while True:
