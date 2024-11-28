@@ -1,0 +1,17 @@
+[tool.poetry]
+name = "tgtg-personal"
+version = "0.1.0"
+description = ""
+authors = ["Reid Meyer <reid.meyer@ah.nl>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.13"
+tgtg = "^0.18.1"
+ipdb = "^0.13.13"
+black = "^24.10.0"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
