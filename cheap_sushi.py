@@ -44,7 +44,7 @@ while True:
     try:
         if first_time or is_time_between(time(8, 00), time(23, 30)):
             first_time = False
-            notify("check email")
+            notify("check your email")
             client = TgtgClient(email=os.getenv("EMAIL"))
             credentials = client.get_credentials()
             break
