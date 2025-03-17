@@ -17,7 +17,7 @@ def is_approximately_third(A, B, tolerance=10):
 
 def is_time_between(begin_time, end_time, check_time=None):
     # If check time is not given, default to current UTC time
-    check_time = check_time or datetime.utcnow().time()
+    check_time = check_time or datetime.now().time()
     if begin_time < end_time:
         return check_time >= begin_time and check_time <= end_time
     else:  # crosses midnight
