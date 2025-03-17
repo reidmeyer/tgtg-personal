@@ -69,7 +69,7 @@ while True:
         while True:
             now = datetime.now()
             current_time = now.strftime("%H:%M:%S")
-            print("Starting Current Time =", current_time)
+            print("Starting... Current Time =", current_time)
 
             # if time is between 1:30-1:30am
             if is_time_between(time(3, 00), time(3, 10)):
