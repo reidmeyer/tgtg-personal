@@ -530,14 +530,14 @@ tests = ["cython", "littleutils", "pygments", "pytest", "typeguard"]
 
 [[package]]
 name = "tgtg"
-version = "0.18.3"
+version = "0.18.4"
 description = "Unoffical python client for TooGoodToGo API"
 optional = false
 python-versions = "<4.0,>=3.9"
 groups = ["main"]
 files = [
-    {file = "tgtg-0.18.3-py3-none-any.whl", hash = "sha256:e2ed61272da7b6cff60f1798c00f3c0b616b1600a2d3cb4e196cbed0d6fe85e9"},
-    {file = "tgtg-0.18.3.tar.gz", hash = "sha256:4bcb428b16679bdaaacfb394c84aef74110565e3edcd60ce9d89ce99e60e71aa"},
+    {file = "tgtg-0.18.4-py3-none-any.whl", hash = "sha256:74880652290b8e73706619f8ad0edce7f317727eee4910637bf868c03b291d23"},
+    {file = "tgtg-0.18.4.tar.gz", hash = "sha256:d9c26eb3f9b4c3cb8b20cfe0f63ff4fa6e9053af527fd036f5ba26eae9c2a936"},
 ]
 
 [package.dependencies]
@@ -592,4 +592,4 @@ files = [
 [metadata]
 lock-version = "2.1"
 python-versions = "^3.13"
-content-hash = "2c525b5ff492598a55bcdbf40959a4201b45122d0f2666f05275b3b2fb7d429a"
+content-hash = "08e11e8e2322b9b6b8b6110a9924d3aeb8a5d82a380f43ceb143551e8015fa63"
