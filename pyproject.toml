@@ -7,7 +7,7 @@ readme = "README.md"
 
 [tool.poetry.dependencies]
 python = "^3.13"
-tgtg = "^0.18.1"
+tgtg = "^0.18.4"
 ipdb = "^0.13.13"
 black = "^24.10.0"
 
