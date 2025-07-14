@@ -1,0 +1,30 @@
+#!/bin/bash
+
+# This script is the startup script to deploy both tgtg-personal and roadsurfer_notifications
+
+# Update system packages
+sudo apt update
+
+# Install Python and virtual environment tools
+sudo apt install -y python3-venv
+
+# Set up virtual environment
+cd /home
+python3 -m venv tgtg-env
+source tgtg-env/bin/activate
+
+# Install necessary Python packages
+pip install tgtg
+
+# Clone the project repository
+git clone https://github.com/reidmeyer/tgtg-personal.git
+git clone https://github.com/reidmeyer/roadsurfer_notifications.git
+
+# Navigate to the project directory
+cd /home/tgtg-personal
+
+# Export email variable and start the script in the background
+EMAIL="<EMAIL>" nohup python3 -u cheap_sushi.py >> /home/tgtg-personal/log.txt 2>&1 &
+
+cd /home/roadsurfer_notifications
+sudo nohup python3 -u roadsurfer.py > /home/roadsurfer_notifications/log.txt 2>&1 &
